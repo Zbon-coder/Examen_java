@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.EtudiantController"
+            prefWidth="950" prefHeight="680"
+            style="-fx-background-color: #f0f4f8;">
+
+    <!-- ══════════════════════  EN-TÊTE  ══════════════════════ -->
+    <top>
+        <VBox style="-fx-background-color: #2c3e50;">
+            <padding><Insets topRightBottomLeft="18"/></padding>
+            <Label text="Gestion des Étudiants"
+                   style="-fx-text-fill: white; -fx-font-size: 22px; -fx-font-weight: bold;">
+                <font><Font name="System Bold" size="22"/></font>
+            </Label>
+            <Label text="Application de gestion — JDBC + MySQL"
+                   style="-fx-text-fill: #95a5a6; -fx-font-size: 12px;"/>
+        </VBox>
+    </top>
+
+    <!-- ══════════════════════  CENTRE  ══════════════════════ -->
+    <center>
+        <VBox spacing="10" fillWidth="true">
+            <padding><Insets top="12" right="15" bottom="5" left="15"/></padding>
+
+            <!-- Barre de recherche -->
+            <HBox spacing="8" alignment="CENTER_LEFT">
+                <Label text="Recherche :" style="-fx-font-weight: bold;"/>
+                <TextField fx:id="fieldRecherche" promptText="Nom, prénom ou filière…"
+                           prefWidth="280"
+                           style="-fx-background-radius: 4;"/>
+                <Button text="Rechercher" onAction="#handleRechercher"
+                        style="-fx-background-color: #3498db; -fx-text-fill: white;
+                               -fx-background-radius: 4; -fx-cursor: hand;"/>
+                <Button text="Actualiser" onAction="#handleActualiser"
+                        style="-fx-background-color: #7f8c8d; -fx-text-fill: white;
+                               -fx-background-radius: 4; -fx-cursor: hand;"/>
+            </HBox>
+
+            <!-- TableView -->
+            <TableView fx:id="tableEtudiants"
+                       VBox.vgrow="ALWAYS"
+                       style="-fx-background-radius: 6; -fx-border-color: #bdc3c7;
+                              -fx-border-radius: 6;">
+                <columns>
+                    <TableColumn fx:id="colId"      text="ID"       prefWidth="50"  minWidth="40"  maxWidth="60"/>
+                    <TableColumn fx:id="colNom"     text="Nom"      prefWidth="150"/>
+                    <TableColumn fx:id="colPrenom"  text="Prénom"   prefWidth="150"/>
+                    <TableColumn fx:id="colEmail"   text="Email"    prefWidth="230"/>
+                    <TableColumn fx:id="colFiliere" text="Filière"  prefWidth="170"/>
+                    <TableColumn fx:id="colNiveau"  text="Niveau"   prefWidth="90"  minWidth="70"  maxWidth="110"/>
+                </columns>
+                <placeholder>
+                    <Label text="Aucun étudiant enregistré."
+                           style="-fx-text-fill: #95a5a6;"/>
+                </placeholder>
+            </TableView>
+
+            <!-- Boutons d'action sur la sélection -->
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <Button text="Modifier la sélection" onAction="#handleModifier"
+                        style="-fx-background-color: #f39c12; -fx-text-fill: white;
+                               -fx-background-radius: 4; -fx-cursor: hand; -fx-min-width: 150;"/>
+                <Button text="Supprimer la sélection" onAction="#handleSupprimer"
+                        style="-fx-background-color: #e74c3c; -fx-text-fill: white;
+                               -fx-background-radius: 4; -fx-cursor: hand; -fx-min-width: 150;"/>
+            </HBox>
+
+        </VBox>
+    </center>
+
+    <!-- ══════════════════════  BAS = FORMULAIRE  ══════════════════════ -->
+    <bottom>
+        <VBox style="-fx-background-color: white;
+                     -fx-border-color: #bdc3c7; -fx-border-width: 1 0 0 0;">
+            <padding><Insets top="14" right="20" bottom="14" left="20"/></padding>
+            <spacing>10</spacing>
+
+            <Label text="Formulaire étudiant"
+                   style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #2c3e50;"/>
+
+            <!-- Ligne 1 : Nom + Prénom + Email -->
+            <HBox spacing="12" alignment="CENTER_LEFT">
+                <VBox spacing="3">
+                    <Label text="Nom *" style="-fx-font-size: 11px; -fx-text-fill: #555;"/>
+                    <TextField fx:id="fieldNom" promptText="Nom de famille"
+                               prefWidth="175"
+                               style="-fx-background-radius: 4; -fx-border-color: #bdc3c7;
+                                      -fx-border-radius: 4;"/>
+                </VBox>
+                <VBox spacing="3">
+                    <Label text="Prénom *" style="-fx-font-size: 11px; -fx-text-fill: #555;"/>
+                    <TextField fx:id="fieldPrenom" promptText="Prénom"
+                               prefWidth="175"
+                               style="-fx-background-radius: 4; -fx-border-color: #bdc3c7;
+                                      -fx-border-radius: 4;"/>
+                </VBox>
+                <VBox spacing="3">
+                    <Label text="Email" style="-fx-font-size: 11px; -fx-text-fill: #555;"/>
+                    <TextField fx:id="fieldEmail" promptText="exemple@email.com"
+                               prefWidth="220"
+                               style="-fx-background-radius: 4; -fx-border-color: #bdc3c7;
+                                      -fx-border-radius: 4;"/>
+                </VBox>
+                <VBox spacing="3">
+                    <Label text="Filière *" style="-fx-font-size: 11px; -fx-text-fill: #555;"/>
+                    <TextField fx:id="fieldFiliere" promptText="Ex: Informatique"
+                               prefWidth="160"
+                               style="-fx-background-radius: 4; -fx-border-color: #bdc3c7;
+                                      -fx-border-radius: 4;"/>
+                </VBox>
+                <VBox spacing="3">
+                    <Label text="Niveau *" style="-fx-font-size: 11px; -fx-text-fill: #555;"/>
+                    <ComboBox fx:id="comboNiveau" prefWidth="100"
+                              style="-fx-background-radius: 4;"/>
+                </VBox>
+            </HBox>
+
+            <!-- Ligne 2 : Boutons + Statut -->
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Button text="Enregistrer" onAction="#handleEnregistrer"
+                        prefWidth="130"
+                        style="-fx-background-color: #27ae60; -fx-text-fill: white;
+                               -fx-font-weight: bold; -fx-background-radius: 4;
+                               -fx-cursor: hand;"/>
+                <Button text="Annuler" onAction="#handleAnnuler"
+                        prefWidth="100"
+                        style="-fx-background-color: #95a5a6; -fx-text-fill: white;
+                               -fx-background-radius: 4; -fx-cursor: hand;"/>
+                <Label fx:id="labelStatut" text=""
+                       style="-fx-font-size: 12px; -fx-font-weight: bold;"/>
+            </HBox>
+        </VBox>
+    </bottom>
+
+</BorderPane>
